@@ -5,11 +5,11 @@ AI Agent hỗ trợ kiểm tra thời khóa biểu bằng giọng nói hoặc v�
 
 Hệ thống cho phép người dùng:
 
-Hỏi lịch học theo ngày
+  +)Hỏi lịch học theo ngày
 
-Nhận phản hồi tự động bằng tiếng Việt
+  +)Nhận phản hồi tự động bằng tiếng Việt
 
-Trả lời bằng giọng nói real-time
+  +)Trả lời bằng giọng nói real-time
 
 ✨ Tính năng chính
 
