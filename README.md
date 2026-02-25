@@ -44,6 +44,9 @@ Máy bạn cần có:
 ✅ API Key từ Google Gemini
 
 🔎 Kiểm tra nhanh
-  node -v
-  npm -v
-  git --version
+  
+  +)node -v
+  
+  +)npm -v
+  
+  +)git --version
