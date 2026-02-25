@@ -76,6 +76,7 @@ npm run dev
 Sau đó mở trình duyệt tại:
 
 http://localhost:5173
+
 📚 Nguồn gốc code ban đầu
 
 Google Gemini Live API:
