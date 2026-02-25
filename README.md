@@ -71,11 +71,17 @@ REACT_APP_GEMINI_API_KEY=your_api_key_here
 👉 Thay your_api_key_here bằng API key của bạn.
 
 Bước 4: Chạy project
-npm run dev
+npm start
 
 Sau đó mở trình duyệt tại:
 
 http://localhost:5173
+
+KẾT QUẢ:
+<img width="1915" height="930" alt="image" src="https://github.com/user-attachments/assets/b448cc90-fa47-49bb-a84e-c841dafb6bfa" />
+<img width="1919" height="901" alt="image" src="https://github.com/user-attachments/assets/616230ed-521b-4256-9281-92dd772f4eca" />
+
+
 
 📚 Nguồn gốc code ban đầu
 
