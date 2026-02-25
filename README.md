@@ -1,133 +1,37 @@
-# Live API - Web Console
+# Live API - Web Console:
+- AI Agent hỗ trợ kiểm tra thời khóa biểu bằng giọng nói hoặc văn bản, sử dụng Google Gemini Live API.
+- Hệ thống cho phép người dùng hỏi lịch học theo ngày và nhận phản hồi tự động bằng tiếng Việt.
+- Tính năng chính:
+    🎤 Nhận diện giọng nói (real-time streaming)
+    💬 Trả lời bằng tiếng Việt
+    📅 Kiểm tra lịch học theo ngày
+    🔧 Tích hợp Function Calling (get_schedule)
+    🔊 Phản hồi bằng âm thanh từ Gemini Live API
+-Cách hoạt động:
+Người dùng hỏi: "Cho tôi xem lịch học ngày 2026-02-21", "Lịch học ngày mai như thế nào",....
 
-This repository contains a react-based starter app for using the [Live API](<[https://ai.google.dev/gemini-api](https://ai.google.dev/api/multimodal-live)>) over a websocket. It provides modules for streaming audio playback, recording user media such as from a microphone, webcam or screen capture as well as a unified log view to aid in development of your application.
-
-[![Live API Demo](readme/thumbnail.png)](https://www.youtube.com/watch?v=J_q7JY1XxFE)
-
-Watch the demo of the Live API [here](https://www.youtube.com/watch?v=J_q7JY1XxFE).
-
-## Usage
-
-To get started, [create a free Gemini API key](https://aistudio.google.com/apikey) and add it to the `.env` file. Then:
-
-```
-$ npm install && npm start
-```
-
-We have provided several example applications on other branches of this repository:
-
-New demos with GenAI SDK:
-
-- [demos/proactive-audio](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/proactive-audio) - demonstrates the Live API's [proactive audio feature](https://ai.google.dev/gemini-api/docs/live-guide#proactive-audio)
-
-
-Original demos:
-
-- [demos/GenExplainer](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genexplainer)
-- [demos/GenWeather](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genweather)
-- [demos/GenList](https://github.com/google-gemini/multimodal-live-api-web-console/tree/demos/genlist)
-
-## Example
-
-Below is an example of an entire application that will use Google Search grounding and then render graphs using [vega-embed](https://github.com/vega/vega-embed):
-
-```typescript
-import { type FunctionDeclaration, SchemaType } from "@google/generative-ai";
-import { useEffect, useRef, useState, memo } from "react";
-import vegaEmbed from "vega-embed";
-import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
-
-export const declaration: FunctionDeclaration = {
-  name: "render_altair",
-  description: "Displays an altair graph in json format.",
-  parameters: {
-    type: SchemaType.OBJECT,
-    properties: {
-      json_graph: {
-        type: SchemaType.STRING,
-        description:
-          "JSON STRING representation of the graph to render. Must be a string, not a json object",
-      },
-    },
-    required: ["json_graph"],
-  },
-};
-
-export function Altair() {
-  const [jsonString, setJSONString] = useState<string>("");
-  const { client, setConfig } = useLiveAPIContext();
-
-  useEffect(() => {
-    setConfig({
-      model: "models/gemini-2.0-flash-exp",
-      systemInstruction: {
-        parts: [
-          {
-            text: 'You are my helpful assistant. Any time I ask you for a graph call the "render_altair" function I have provided you. Dont ask for additional information just make your best judgement.',
-          },
-        ],
-      },
-      tools: [{ googleSearch: {} }, { functionDeclarations: [declaration] }],
-    });
-  }, [setConfig]);
-
-  useEffect(() => {
-    const onToolCall = (toolCall: ToolCall) => {
-      console.log(`got toolcall`, toolCall);
-      const fc = toolCall.functionCalls.find(
-        (fc) => fc.name === declaration.name
-      );
-      if (fc) {
-        const str = (fc.args as any).json_graph;
-        setJSONString(str);
-      }
-    };
-    client.on("toolcall", onToolCall);
-    return () => {
-      client.off("toolcall", onToolCall);
-    };
-  }, [client]);
-
-  const embedRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (embedRef.current && jsonString) {
-      vegaEmbed(embedRef.current, JSON.parse(jsonString));
-    }
-  }, [embedRef, jsonString]);
-  return <div className="vega-embed" ref={embedRef} />;
-}
-```
-
-## development
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Project consists of:
-
-- an Event-emitting websocket-client to ease communication between the websocket and the front-end
-- communication layer for processing audio in and out
-- a boilerplate view for starting to build your apps and view logs
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-_This is an experiment showcasing the Live API, not an official Google product. We’ll do our best to support and maintain this experiment but your mileage may vary. We encourage open sourcing projects as a way of learning from each other. Please respect our and other creators' rights, including copyright and trademark rights when present, when sharing these works and creating derivative work. If you want more info on Google's policy, you can find that [here](https://developers.google.com/terms/site-policies)._
+# Cách cài đặt:
+📌 Yêu cầu trước khi cài
+Máy bạn cần có:
+✅ Node.js (>= 18)
+✅ npm (cài cùng Node)
+✅ Git
+✅ API Key từ Google Gemini
+Kiểm tra nhanh:
+  +)node -v
+  +)npm -v
+  +)git --version
+# Cách chạy:
+📥 Bước 1: Clone project
+git clone https://github.com/huyj62005/AI-agent-Check-class-schedule.git
+cd AI-agent-Check-class-schedule/live-api-web-console
+📦 Bước 2: Cài dependencies
+npm install
+🔑 Bước 3: Tạo file .env
+Tạo file .env trong thư mục live-api-web-console
+Nội dung:VITE_GEMINI_API_KEY=your_api_key_here
+👉 Thay your_api_key_here bằng API key của bạn.
+▶️ Bước 4: Chạy project
+npm run dev
+=>Sau đó mở trình duyệt tại: http://localhost:5173
+# Code ban đầu - Gemini Live API: https://github.com/google-gemini/live-api-web-console
